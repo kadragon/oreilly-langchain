@@ -1,0 +1,20 @@
+{
+  "name": "oreilly-langchain",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.3.47",
+    "@langchain/core": "^0.3.61",
+    "@langchain/openai": "^0.5.16",
+    "dotenv": "^17.0.0",
+    "langchain": "^0.3.29",
+    "zod": "^3.25.67"
+  }
+}
