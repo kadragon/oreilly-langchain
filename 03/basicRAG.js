@@ -32,10 +32,10 @@ try {
   console.log("Documents have been successfully stored in the database.");
 } catch (error) {
   console.error("An error occurred:", error);
+  process.exit(1);
 } finally {
   if (db) {
     await db.end();
   }
-  process.exit(0);
 }
 

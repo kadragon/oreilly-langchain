@@ -47,20 +47,21 @@ await recordManager.createSchema();
 function generateStableId(content) {
   return createHash('sha256').update(content).digest('hex');
 }
-
+const doc1Content = "there are cats in the pond";
+const doc2Content = "ducks are also found in the pond";
 const docs = [
   {
-    pageContent: "there are cats in the pond",
-    metadata: { 
-      id: generateStableId("there are cats in the pond"), 
-      source: "cats.txt" 
+    pageContent: doc1Content,
+    metadata: {
+      id: generateStableId(doc1Content),
+      source: "cats.txt"
     },
   },
   {
-    pageContent: "ducks are also found in the pond",
-    metadata: { 
-      id: generateStableId("ducks are also found in the pond"), 
-      source: "ducks.txt" 
+    pageContent: doc2Content,
+    metadata: {
+      id: generateStableId(doc2Content),
+      source: "ducks.txt"
     },
   },
 ];
