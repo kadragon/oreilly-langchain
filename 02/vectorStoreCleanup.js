@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { createHash } from 'crypto';
 
 import { PostgresRecordManager } from "@langchain/community/indexes/postgres";
 import { index } from "langchain/indexes";
@@ -14,6 +15,7 @@ const config = {
     connectionString,
   },
   tableName: tableName,
+
   columns: {
     idColumnName: "id",
     vectorColumnName: "vector",
@@ -41,14 +43,26 @@ const recordManager = new PostgresRecordManager(
 
 await recordManager.createSchema();
 
+// 문서 내용을 기반으로 안정적인 ID를 생성하는 함수
+function generateStableId(content) {
+  return createHash('sha256').update(content).digest('hex');
+}
+const doc1Content = "there are cats in the pond";
+const doc2Content = "ducks are also found in the pond";
 const docs = [
   {
-    pageContent: "there are cats in the pond",
-    metadata: { id: uuidv4(), source: "cats.txt" },
+    pageContent: doc1Content,
+    metadata: {
+      id: generateStableId(doc1Content),
+      source: "cats.txt"
+    },
   },
   {
-    pageContent: "ducks are also found in the pond",
-    metadata: { id: uuidv4(), source: "ducks.txt" },
+    pageContent: doc2Content,
+    metadata: {
+      id: generateStableId(doc2Content),
+      source: "ducks.txt"
+    },
   },
 ];
 
@@ -79,6 +93,7 @@ const index_attempt_2 = await index({
 console.log(index_attempt_2);
 
 docs[0].pageContent = "I modified the first document content";
+docs[0].metadata.id = generateStableId(docs[0].pageContent);
 const index_attempt_3 = await index({
   docsSource: docs,
   recordManager,
